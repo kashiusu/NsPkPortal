@@ -13,12 +13,10 @@
 
 Route::get('test', function()
 {
-    $id = 19668345;
-    $response = SummonerController::showLeague($id);
     
     //$url='https://prod.api.pvp.net/api/lol/euw/v1.2/stats/by-summoner/19668345/summary?season=SEASON4&api_key=ff830f4a-74c0-4329-9a69-ea1128099d0c';
     //$response = @json_decode(file_get_contents($url), TRUE);
-    return View::make('test')->with('response', $response);
+    return View::make('test');
 });
 
 Route::filter('admin', function()

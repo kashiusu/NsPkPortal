@@ -172,7 +172,7 @@ class SummonerController extends BaseController {
                     'leaguename'    => $SumL['leagueName'],
                     'tier'          => $SumL['tier'],
                     'rank'          => $SumL['rank'],
-                    'lp'            => $SumL['leaguePoint'],
+                    'lp'            => $SumL['leaguePoints'],
                     'summoners_id'  => $id,
                     'leaguetypes_id'=> $leaguetype
                 ));
@@ -183,7 +183,7 @@ class SummonerController extends BaseController {
         public static function updateDataStat($id)
         {
             $Summonerleaguestat = SummonerController::showLeagueStat($id);
-            foreach ($Summonerleaguestat as $SumLS){
+            foreach ($Summonerleaguestat['playerStatSummaries'] as $SumLS){
                 if($SumLS['playerStatSummaryType'] == 'RankedSolo5x5' || $SumLS['playerStatSummaryType'] == 'RankedTeam3x3' || $SumLS['playerStatSummaryType'] == 'RankedTeam5x5'){
                     $leaguetype = SummonerController::selectType($SumLS['playerStatSummaryType']);
                     
@@ -192,7 +192,7 @@ class SummonerController extends BaseController {
                         'wins'          => $SumLS['wins'],
                         'losses'        => $SumLS['losses']
                     ));
-                    $LeagueStat->save();
+                    //$LeagueStat->save();
                 }
             }
         }
