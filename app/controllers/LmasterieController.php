@@ -20,7 +20,7 @@ class LmasterieController extends BaseController {
                 $lmasterie->save();
             }
 
-            return Redirect::route('manage');
+            return Redirect::route('manage_item');
 	}
 
 	/**

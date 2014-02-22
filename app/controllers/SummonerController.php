@@ -158,7 +158,7 @@ class SummonerController extends BaseController {
         public static function update($id){
             SummonerController::updateData($id);
             SummonerController::updateDataStat($id);
-            return Redirect::back();
+            //return Redirect::back();
         }
 
 
@@ -183,16 +183,14 @@ class SummonerController extends BaseController {
         public static function updateDataStat($id)
         {
             $Summonerleaguestat = SummonerController::showLeagueStat($id);
-            foreach ($Summonerleaguestat['playerStatSummaries'] as $SumLS){
-                if($SumLS['playerStatSummaryType'] == 'RankedSolo5x5' || $SumLS['playerStatSummaryType'] == 'RankedTeam3x3' || $SumLS['playerStatSummaryType'] == 'RankedTeam5x5'){
-                    $leaguetype = SummonerController::selectType($SumLS['playerStatSummaryType']);
-                    
-                    $LeagueStat = League::where('summoners_id', '=', $id)->update(array(
-                       'leaguetypes_id' => $leaguetype,
-                        'wins'          => $SumLS['wins'],
-                        'losses'        => $SumLS['losses']
+            foreach ($Summonerleaguestat['playerStatSummaries'] as $Value){
+                $leaguetype = SummonerController::selectType($Value['playerStatSummaryType']);
+                if ($leaguetype != 0){
+                    $updateLeague = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
+                    $updateLeague->update(array(
+                        'wins' => $Value['wins'],
+                        'losses' => $Value['losses']
                     ));
-                    //$LeagueStat->save();
                 }
             }
         }
@@ -200,12 +198,20 @@ class SummonerController extends BaseController {
 	public static function selectType($type)
 	{
             switch ($type){
-                    case 'RANKED_SOLO_5x5' || 'RankedSolo5x5':
+                    case 'RANKED_SOLO_5x5':
                         return 1;
-                    case 'RANKED_TEAM_3x3' || 'RankedTeam3x3':
+                    case 'RANKED_TEAM_3x3':
                         return 2;
-                    case 'RANKED_TEAM_5x5' || 'RankedTeam5x5':
+                    case 'RANKED_TEAM_5x5':
                         return 3;
+                    case 'RankedSolo5x5':
+                        return 1;
+                    case 'RankedTeam3x3':
+                        return 2;
+                    case 'RankedTeam5x5':
+                        return 3;
+                    default :
+                        return 0;
                 }            
 	}
         

@@ -20,7 +20,7 @@ class LspellController extends BaseController {
                 $lspell->save();
             }
 
-            return Redirect::route('manage');
+            return Redirect::route('manage_item');
 	}
 
 	/**

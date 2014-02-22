@@ -20,7 +20,7 @@ class LitemController extends BaseController {
             $litem->save();
         }
                 
-        return Redirect::route('manage');
+        return Redirect::route('manage_item');
     }
     
     public static function getUrl()

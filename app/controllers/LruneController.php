@@ -21,7 +21,7 @@ class LruneController extends BaseController {
                 $lrune->save();
             }
 
-            return Redirect::route('manage');
+            return Redirect::route('manage_item');
 	}
 
 	/**

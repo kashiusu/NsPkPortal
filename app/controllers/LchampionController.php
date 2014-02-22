@@ -20,7 +20,7 @@ class LchampionController extends BaseController {
             $lchamp->save();
         }
                 
-        return Redirect::route('manage');
+        return Redirect::route('manage_item');
     }
     
     public static function getUrl()

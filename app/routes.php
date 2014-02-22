@@ -40,20 +40,20 @@ Route::get('/login', function(){
 
 Route::get('LeagueofLegend/', array(
     'as' => 'home',
-    'uses' => function()
-{
-    $Summoners = SummonerController::showSummonerAll();
+    'uses' => function(){
+    $Summoners = Summoner::all();
     return View::make('LeagueofLegend/index')->with('Summoners', $Summoners);
 }));
 
 
-Route::post('LeagueofLegend/renew', function()
-{
-    $id = Input::get('id');
-    SummonerController::update($id);
-    return Redirect::to('LeagueofLegend/');
-    
-});
+Route::post('LeagueofLegend/renew', array(
+        'as' => 'renew',
+        'uses' => function(){
+            $id = Input::get('id');
+            $name = SummonerController::getName($id);
+            SummonerController::update($id);
+            return Redirect::back()->with('renew_message', $name . ' data has been updated');
+        }));
 
 Route::get('LeagueofLegend/add', array(
     'as'    => 'add_summoner',

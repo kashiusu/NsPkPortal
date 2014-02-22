@@ -17,14 +17,19 @@
 <!--
     Gestion des Summoners 
 -->
-    {{Session::get('delete_message')}}    
+    <span style='color: red'>{{Session::get('renew_message')}} 
+    {{Session::get('delete_message')}}    </span>
     <?php $Summoners = Summoner::all(); ?>
     @foreach($Summoners as $Sum)
-        <p> {{$Sum->name}}
+    <p> {{$Sum->name}} 
+            {{ Form::open(array('url' => URL::route('renew'))) }}
+            {{Form::hidden('id', $Sum->id) }}
+            {{Form::submit('Renew data')}}
+            {{ Form::close()}}
             {{ Form::open(array('url' => URL::route('manage_delete'))) }}
             {{Form::hidden('id', $Sum->id) }}
             {{Form::submit('Delete')}}
-            {{ Form::close() }}            
+            {{ Form::close()}}  
         </p>
     @endforeach
 
