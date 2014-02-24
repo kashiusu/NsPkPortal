@@ -8,7 +8,7 @@
     <p style="color: red; font-weight: bold">{{$message}}</p>
 
 @endforeach
-
+<span style='color: red'>{{Session::get('add_message')}} </span>
     {{ Form::open(array('url' => 'LeagueofLegend/add')) }}
     {{Form::hidden('id', Input::old('id'))}}
     {{Form::label('name','Summoner Name')}} : {{Form::text('name', Input::old('name'))}} {{Form::submit('Ajouter')}}

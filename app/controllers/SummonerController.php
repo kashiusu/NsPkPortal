@@ -110,7 +110,7 @@ class SummonerController extends BaseController {
                     DB::insert('insert into summoners (id, name) values ('.$id.', "'.$name.'")');
                     SummonerController::update($id);
                     //return Redirect::to('LeagueofLegend/manage_s');
-                    return Redirect::back();
+                    return Redirect::back()->with('add_message', $name . ' have been added');
                 }
             }
         
@@ -169,13 +169,16 @@ class SummonerController extends BaseController {
                 $leaguetype = SummonerController::selectType($SumL['queueType']);
                 
                 League::firstOrCreate(array(
-                    'leaguename'    => $SumL['leagueName'],
-                    'tier'          => $SumL['tier'],
-                    'rank'          => $SumL['rank'],
-                    'lp'            => $SumL['leaguePoints'],
-                    'summoners_id'  => $id,
-                    'leaguetypes_id'=> $leaguetype
-                ));
+                        'summoners_id'  => $id,
+                        'leaguetypes_id'=> $leaguetype
+                        ));
+               $updateLeagueData = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
+               $updateLeagueData->update(array(
+                        'leaguename'    => $SumL['leagueName'],
+                        'tier'          => $SumL['tier'],
+                        'rank'          => $SumL['rank'],
+                        'lp'            => $SumL['leaguePoints'],
+                    ));
             }
         }
         
@@ -186,8 +189,8 @@ class SummonerController extends BaseController {
             foreach ($Summonerleaguestat['playerStatSummaries'] as $Value){
                 $leaguetype = SummonerController::selectType($Value['playerStatSummaryType']);
                 if ($leaguetype != 0){
-                    $updateLeague = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
-                    $updateLeague->update(array(
+                    $updateLeagueStat = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
+                    $updateLeagueStat->update(array(
                         'wins' => $Value['wins'],
                         'losses' => $Value['losses']
                     ));

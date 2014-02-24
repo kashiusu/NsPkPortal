@@ -3,20 +3,28 @@
 @section('content')
 
 <?php
-    $id = 19668345;
-    $Summonerleaguestat = SummonerController::showLeagueStat($id);
-            foreach ($Summonerleaguestat['playerStatSummaries'] as $Value){
-                $leaguetype = SummonerController::selectType($Value['playerStatSummaryType']);
-                if ($leaguetype != 0){
-                    
-                    $updateLeague = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
-                    $updateLeague->update(array(
-                        'wins' => $Value['wins'],
-                        'losses' => $Value['losses']
-                    ));
-                            
-                }
-            }
+    $kashiu = 19668345;
     
+    $sumall = Summoner::all();
+
 ?>
+
+@foreach($sumall as $Sum)
+
+ 
+<p> {{$Sum->name}} <br/>
+    <?php 
+        $data = SummonerdataController::showSumonnerDataSolo($Sum->id);
+        foreach ($data as $value){
+            echo $value->tier . ' ' . $value->rank;
+        }
+    ?>   
+        </p>
+        <p>
+            {{Form::open(array('url' => URL::route('renew'))) }}
+            {{Form::hidden('id', $Sum->id) }}
+            {{Form::submit('Renew data')}}
+            {{ Form::close()}}           
+        </p>
+    @endforeach
 @stop

@@ -27,6 +27,8 @@ Route::filter('admin', function()
     }
 });
 
+Route::pattern('id', '[0-9]+');
+
 //--------------------------------------------------------------------------
 
 Route::get('/', function(){
@@ -136,3 +138,8 @@ Route::post('LeagueofLegend/manage_s/refreshM', array(
     'before'=> 'auth|admin',
     'uses'  => 'LmasterieController@Refresh'
 ));
+
+Route::get('LeagueofLegend/summoner/{id}', function($id)
+{
+    return View::make('LeagueofLegend/summoner')->with('id', $id);
+});
