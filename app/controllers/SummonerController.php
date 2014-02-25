@@ -157,7 +157,8 @@ class SummonerController extends BaseController {
         
         public static function update($id){
             SummonerController::updateData($id);
-            SummonerController::updateDataStat($id);
+            SummonerdataController::updateDataStat($id);
+            ChampiondataController::updateChampionData($id);
             //return Redirect::back();
         }
 
@@ -181,23 +182,7 @@ class SummonerController extends BaseController {
                     ));
             }
         }
-        
-        
-        public static function updateDataStat($id)
-        {
-            $Summonerleaguestat = SummonerController::showLeagueStat($id);
-            foreach ($Summonerleaguestat['playerStatSummaries'] as $Value){
-                $leaguetype = SummonerController::selectType($Value['playerStatSummaryType']);
-                if ($leaguetype != 0){
-                    $updateLeagueStat = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
-                    $updateLeagueStat->update(array(
-                        'wins' => $Value['wins'],
-                        'losses' => $Value['losses']
-                    ));
-                }
-            }
-        }
-        
+               
 	public static function selectType($type)
 	{
             switch ($type){
@@ -231,30 +216,9 @@ class SummonerController extends BaseController {
             $name = SummonerController::getName($id);
             if(!empty($summoner)){
                 DB::table('summoners')->where('id', '=', $id)->delete();
+                SummonerdataController::deleteSummonerData($id);
                 return Redirect::to('LeagueofLegend/manage_s')->with('delete_message', $name . ' has been deleted');
             }
         }
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function preUrl($id)
-	{
-        return View::make('summoners.edit');
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 
 }

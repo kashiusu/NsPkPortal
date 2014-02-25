@@ -4,27 +4,19 @@
 
 <?php
     $kashiu = 19668345;
-    
-    $sumall = Summoner::all();
-
+    $leag = 1;
+    $season = 'SEASON4';
+    /**
+     * echo '<pre>';
+     * echo '</pre>';
+     * 
+     */
+    $champions = Championdata::where('summoners_id', $kashiu)->where('leaguechampions_id', '>', 0)->get();
+    foreach($champions as $test){
+        echo '<pre>';
+        echo $test->leaguechampions_id;
+        echo ' '. $test->totalSessionsPlayed;
+        echo '</pre>';
+    }
 ?>
-
-@foreach($sumall as $Sum)
-
- 
-<p> {{$Sum->name}} <br/>
-    <?php 
-        $data = SummonerdataController::showSumonnerDataSolo($Sum->id);
-        foreach ($data as $value){
-            echo $value->tier . ' ' . $value->rank;
-        }
-    ?>   
-        </p>
-        <p>
-            {{Form::open(array('url' => URL::route('renew'))) }}
-            {{Form::hidden('id', $Sum->id) }}
-            {{Form::submit('Renew data')}}
-            {{ Form::close()}}           
-        </p>
-    @endforeach
 @stop

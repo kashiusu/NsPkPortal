@@ -4,8 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/manage_s.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/controllers/SummonerdataController.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/artisan.bat</file>
             <file>file:/C:/wamp/www/NsPkPortal/app/controllers/SummonerController.php</file>
             <file>file:/C:/wamp/www/NsPkPortal/app/routes.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/summoner.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/database/migrations/2014_02_24_090431_create_summoner_data.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/views/test.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/add.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/models/Summonerdata.php</file>
             <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/index.blade.php</file>
         </group>
     </open-files>
