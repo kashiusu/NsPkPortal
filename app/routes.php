@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('test', function()
-{
-    
-    //$url='https://prod.api.pvp.net/api/lol/euw/v1.2/stats/by-summoner/19668345/summary?season=SEASON4&api_key=ff830f4a-74c0-4329-9a69-ea1128099d0c';
-    //$response = @json_decode(file_get_contents($url), TRUE);
-    return View::make('test');
-});
+Route::get('test', array(
+    'as' => 'fck',
+    'uses'=>function(){
+        return View::make('test');
+    }));
 
 Route::filter('admin', function()
 {
@@ -50,12 +48,8 @@ Route::get('LeagueofLegend/', array(
 
 Route::post('LeagueofLegend/renew', array(
         'as' => 'renew',
-        'uses' => function(){
-            $id = Input::get('id');
-            $name = SummonerController::getName($id);
-            SummonerController::update($id);
-            return Redirect::back()->with('renew_message', $name . ' data has been updated');
-        }));
+        'uses' => 'SummonerdataController@renewDataPost'
+        ));
 
 Route::get('LeagueofLegend/add', array(
     'as'    => 'add_summoner',

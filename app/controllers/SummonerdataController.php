@@ -108,10 +108,10 @@ class SummonerdataController extends BaseController {
             } 
             if($interval->s !== 0) { 
                 if(!count($format)) { 
-                    return "less than a minute ago"; 
-                } else { 
+                    return "less than a minute"; 
+                } /**else { 
                     $format[] = "%s ".$doPlural($interval->s, "second"); 
-                } 
+                } */
             } 
 
             if(count($format) > 1) { 
@@ -121,5 +121,28 @@ class SummonerdataController extends BaseController {
             } 
 
             return $interval->format($format); 
+        }
+        
+        public static function showtimes($id){
+            $data = League::where('summoners_id', $id)->take(1)->get();
+            foreach ($data as $time){
+                $d1 = new DateTime($time->updated_at);
+                $d2 = new DateTime(date('Y-m-d H:i:s'));
+            }
+            $result = array('d1'=>$d1, 'd2'=>$d2);
+            return $result;
+        }
+
+
+        public static function renewDataPost(){
+            $id = Input::get('id');
+            $name = SummonerController::getName($id);
+            $a = self::showtimes($id);
+            $b = $a['d1']->diff($a['d2'])->format('%y%m%d%h');
+            if ($b > 0){
+                SummonerController::update($id);
+                return Redirect::back()->with('message', $name.' data has been updated.');
+            }
+            return Redirect::back()->with('message', '<span style="color: red">It was recently updated. You can refresh data again shortly</span>');
         }
 }
