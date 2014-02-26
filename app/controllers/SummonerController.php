@@ -56,22 +56,7 @@ class SummonerController extends BaseController {
             return $response;
             
         }
-        /**
-         * Envoie l'url avec l'id d'un Summoner
-         * pour récuperer les stats de leagues
-         * !! ATTENTION SEASON might be VARIABLE !!
-         * @param type $id
-         * @return array
-         * 
-         */
-        public static function showLeagueStat($id)
-        {
-            $url='https://prod.api.pvp.net/api/lol/euw/v1.2/stats/by-summoner/'.$id.'/summary?season=SEASON4&api_key=ff830f4a-74c0-4329-9a69-ea1128099d0c';
-            $response = @json_decode(file_get_contents($url), true);
-           
-            return $response;
-            
-        }
+        
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -95,7 +80,7 @@ class SummonerController extends BaseController {
             }else{
                 
                 $nospace = str_replace(" ", "", $name);
-                $id = SummonerController::getId(trim($nospace));
+                $id = self::getId(trim($nospace));
                 
                 $vid = array('id' => $id);
                 $message2 = array(
@@ -108,7 +93,7 @@ class SummonerController extends BaseController {
                     return Redirect::back()->withErrors($v2)->withInput(); 
                 }else{
                     DB::insert('insert into summoners (id, name) values ('.$id.', "'.$name.'")');
-                    SummonerController::update($id);
+                    self::update($id);
                     //return Redirect::to('LeagueofLegend/manage_s');
                     return Redirect::back()->with('add_message', $name . ' have been added');
                 }
@@ -118,7 +103,7 @@ class SummonerController extends BaseController {
         
         public static function getName($id)
         {
-            $Summoner = SummonerController::showLeague($id);
+            $Summoner = self::showLeague($id);
             if (count($Summoner) != 0){
                 
                 foreach ($Summoner as $value){
@@ -156,7 +141,7 @@ class SummonerController extends BaseController {
 	 */
         
         public static function update($id){
-            SummonerController::updateData($id);
+            self::updateData($id);
             SummonerdataController::updateDataStat($id);
             ChampiondataController::updateChampionData($id);
             //return Redirect::back();
@@ -165,9 +150,9 @@ class SummonerController extends BaseController {
 
         public static function updateData($id)
         {
-            $Summonerleague = SummonerController::showLeague($id);
+            $Summonerleague = self::showLeague($id);
             foreach ($Summonerleague as $SumL){
-                $leaguetype = SummonerController::selectType($SumL['queueType']);
+                $leaguetype = SummonerdataController::selectType($SumL['queueType']);
                 
                 League::firstOrCreate(array(
                         'summoners_id'  => $id,
@@ -183,25 +168,7 @@ class SummonerController extends BaseController {
             }
         }
                
-	public static function selectType($type)
-	{
-            switch ($type){
-                    case 'RANKED_SOLO_5x5':
-                        return 1;
-                    case 'RANKED_TEAM_3x3':
-                        return 2;
-                    case 'RANKED_TEAM_5x5':
-                        return 3;
-                    case 'RankedSolo5x5':
-                        return 1;
-                    case 'RankedTeam3x3':
-                        return 2;
-                    case 'RankedTeam5x5':
-                        return 3;
-                    default :
-                        return 0;
-                }            
-	}
+	
         
 	/**
 	 * Display the specified resource.
@@ -213,7 +180,7 @@ class SummonerController extends BaseController {
         {
             $id = Input::get('id');
             $summoner = Summoner::find($id);
-            $name = SummonerController::getName($id);
+            $name = self::getName($id);
             if(!empty($summoner)){
                 DB::table('summoners')->where('id', '=', $id)->delete();
                 SummonerdataController::deleteSummonerData($id);
