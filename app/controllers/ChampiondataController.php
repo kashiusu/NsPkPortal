@@ -21,7 +21,7 @@ class ChampiondataController extends BaseController {
          public static function updateChampionData($id)
         {
             $season = 'SEASON4';
-            $ChampionStats = ChampiondataController::showChampionStat($id, $season);
+            $ChampionStats = self::showChampionStat($id, $season);
             foreach ($ChampionStats['champions'] as $Stat){
                 
                 Championdata::firstOrCreate(array(
@@ -55,5 +55,34 @@ class ChampiondataController extends BaseController {
                    'totalUnrealKills'    => $Stat['stats']['totalUnrealKills'],
                     ));
             }
+        }
+        
+        public static function deleteChampionData($id){
+            
+            DB::table('championdatas')->where('summoners_id', '=', $id)->delete();
+        }
+        
+        public static function getChampionName($champId){
+            $Champ = LeagueChampion::where('id', $champId)->get();
+            foreach ($Champ as $info){
+                $name = $info->name;
+            }
+            return $name;
+        }
+        
+        public static function calculWinrate($win,$total){
+            $winrate = 0;
+            if ($total > 0){
+                $winrate = round(($win/$total)*100,1);
+            }
+            return $winrate;
+        }
+        
+        public static function calculeAverage($value,$total){
+            $average = 0;
+            if ($total > 0){
+                $average = round(($value/$total),1);
+            }   
+            return $average;
         }
 }

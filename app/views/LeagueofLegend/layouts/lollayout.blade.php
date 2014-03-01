@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>NsPk - League of Legend</title>
+    <!-- temporaire !!!-->
+    {{ HTML::style('css/styleTablesort.css'); }}
+    {{ HTML::style('css/style.css'); }}
+    <!--{{ HTML::script('js/jquery-2.1.0.min.js'); }}-->
+    <!--{{ HTML::script('js/jquery.tablesorter.pager.js'); }}-->
+    <script type="text/javascript" src="{{ URL::asset('js/jquery-2.1.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/jquery.tablesorter.js') }}"></script>
+    <script type="text/javascript">
+$(function(){
+  $("table").tablesorter({widgets: ["zebra"]});
+});
+    </script>
 </head>
 <body>
     <h1>League of Legend</h1>

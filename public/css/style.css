@@ -1,0 +1,12 @@
+/* tables */
+#test{
+    width: 800px;
+    background-color: red;
+}
+#boulet{
+    width: 800px;
+    height: 340px;
+    background-color: #e9e4e5;
+    background-image: url(../images/tumblr_mvpjndhyaa1rs6p09o1_1280.jpg);
+    background-repeat: no-repeat;
+}

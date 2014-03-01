@@ -65,11 +65,11 @@ class SummonerController extends BaseController {
                
 	public static function addPost()
 	{
-            $name = Input::get('name');    
+            $Inputname = Input::get('name');    
             
             $rules1 = array('name'  =>  'required');   
             $rules2 = array('id' => 'required|unique:summoners,id'); 
-            $vname = array ('name' => $name); 
+            $vname = array ('name' => $Inputname); 
             $message1 = array (
                     'unique:summoners,id' => "This Summoner already exist");
             $v = Validator::make($vname, $rules1,$message1);
@@ -79,7 +79,7 @@ class SummonerController extends BaseController {
                 return Redirect::to('LeagueofLegend/manage_s')->withErrors($v)->withInput(); 
             }else{
                 
-                $nospace = str_replace(" ", "", $name);
+                $nospace = str_replace(" ", "", $Inputname);
                 $id = self::getId(trim($nospace));
                 
                 $vid = array('id' => $id);
@@ -92,6 +92,7 @@ class SummonerController extends BaseController {
                 {
                     return Redirect::back()->withErrors($v2)->withInput(); 
                 }else{
+                    $name = self::getName($id);
                     DB::insert('insert into summoners (id, name) values ('.$id.', "'.$name.'")');
                     self::update($id);
                     //return Redirect::to('LeagueofLegend/manage_s');
@@ -184,6 +185,7 @@ class SummonerController extends BaseController {
             if(!empty($summoner)){
                 DB::table('summoners')->where('id', '=', $id)->delete();
                 SummonerdataController::deleteSummonerData($id);
+                ChampiondataController::deleteChampionData($id);
                 return Redirect::to('LeagueofLegend/manage_s')->with('delete_message', $name . ' has been deleted');
             }
         }

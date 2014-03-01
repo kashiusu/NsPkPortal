@@ -17,11 +17,11 @@
 <!--
     Gestion des Summoners 
 -->
-    <span style='color: red'>{{Session::get('renew_message')}} 
+    <span style='color: red'>{{Session::get('message')}} 
     {{Session::get('delete_message')}}    </span>
     <?php $Summoners = Summoner::all(); ?>
     @foreach($Summoners as $Sum)
-    <p> {{$Sum->name}} 
+    <p> <a href='summoner/{{$Sum->id}}'>{{$Sum->name}} </a>
             {{ Form::open(array('url' => URL::route('renew'))) }}
             {{Form::hidden('id', $Sum->id) }}
             {{Form::submit('Renew data')}}
