@@ -4,5 +4,7 @@ class LeagueChampion extends Eloquent {
     
     protected $table = 'leaguechampions';
     
-    protected $fillable = array('id', 'name', 'w', 'h', 'x', 'y', 'sprite');
+    protected $guarded = array();
+
+	public static $rules = array();
 }

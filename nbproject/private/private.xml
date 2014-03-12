@@ -6,13 +6,13 @@
             <file>file:/C:/wamp/www/NsPkPortal/app/controllers/SummonerController.php</file>
             <file>file:/C:/wamp/www/NsPkPortal/app/controllers/SummonerdataController.php</file>
             <file>file:/C:/wamp/www/NsPkPortal/app/routes.php</file>
-            <file>file:/C:/wamp/www/NsPkPortal/public/css/styleTablesort.css</file>
-            <file>file:/C:/wamp/www/NsPkPortal/public/js/jquery.tablesorter.pager.js</file>
-            <file>file:/C:/wamp/www/NsPkPortal/public/css/style.css</file>
-            <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/layouts/lollayout.blade.php</file>
-            <file>file:/C:/wamp/www/NsPkPortal/app/views/test.blade.php</file>
-            <file>file:/C:/wamp/www/NsPkPortal/app/controllers/ChampiondataController.php</file>
-            <file>file:/C:/wamp/www/NsPkPortal/app/views/LeagueofLegend/index.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/database/migrations/2014_03_05_091822_recreate_leaguechampions.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/controllers/LitemController.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/database/seeds/DatabaseSeeder.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/views/test2.blade.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/database/migrations/2014_03_05_095003_recreate_leagueitems.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/database/migrations/2014_02_25_094112_create_championdatas.php</file>
+            <file>file:/C:/wamp/www/NsPkPortal/app/controllers/LchampionController.php</file>
         </group>
     </open-files>
 </project-private>

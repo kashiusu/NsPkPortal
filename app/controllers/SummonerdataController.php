@@ -28,7 +28,7 @@ class SummonerdataController extends BaseController {
         
         public static function showSumonnerDataSolo($id)
         {
-            $Summoner = Summonerdata::whereRaw('sum_id ='. $id .' and leag_type = 1')->get();
+            $Summoner = Summonerdata::whereRaw('sum_id ='. $id .' and leag_type = "RANKED_SOLO_5x5"')->get();
             return $Summoner;
         }
         
@@ -39,7 +39,7 @@ class SummonerdataController extends BaseController {
         
         public static function calculWinrate($id, $leag){
             $ratio = 0;
-            $Summoner = Summonerdata::whereRaw('sum_id ='. $id .' and leag_type = '. $leag)->get();
+            $Summoner = Summonerdata::whereRaw('sum_id ='. $id .' and leag_type = "'. $leag.'"')->get();
             foreach($Summoner as $value){
                 if (($value['wins']+$value['losses']) > 0){
                     $ratio = round(($value['wins'] / ($value['wins'] + $value['losses'])) * 100, 1);
@@ -53,7 +53,7 @@ class SummonerdataController extends BaseController {
             $Summonerleaguestat = self::showLeagueStat($id);
             foreach ($Summonerleaguestat['playerStatSummaries'] as $Value){
                 $leaguetype = self::selectType($Value['playerStatSummaryType']);
-                if ($leaguetype != 0){
+                if ($leaguetype != 'Other'){
                     $updateLeagueStat = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
                     $updateLeagueStat->update(array(
                         'wins' => $Value['wins'],
@@ -69,19 +69,19 @@ class SummonerdataController extends BaseController {
 	{
             switch ($type){
                     case 'RANKED_SOLO_5x5':
-                        return 1;
+                        return 'RANKED_SOLO_5x5';
                     case 'RANKED_TEAM_3x3':
-                        return 2;
+                        return 'RANKED_TEAM_3x3';
                     case 'RANKED_TEAM_5x5':
-                        return 3;
+                        return 'RANKED_TEAM_5x5';
                     case 'RankedSolo5x5':
-                        return 1;
+                        return 'RANKED_SOLO_5x5';
                     case 'RankedTeam3x3':
-                        return 2;
+                        return 'RANKED_TEAM_3x3';
                     case 'RankedTeam5x5':
-                        return 3;
+                        return 'RANKED_TEAM_5x5';
                     default :
-                        return 0;
+                        return 'Other';
                 }            
 	}
         public static function formatdatediff($d1, $d2){
@@ -138,8 +138,8 @@ class SummonerdataController extends BaseController {
             $id = Input::get('id');
             $name = SummonerController::getName($id);
             $a = self::showtimes($id);
-            $b = $a['d1']->diff($a['d2'])->format('%y%m%d%h');
-            if ($b > 0){
+            $b = $a['d1']->diff($a['d2'])->format('%y%m%d%h%i');
+            if ($b > 20){
                 SummonerController::update($id);
                 return Redirect::back()->with('message', $name.' data has been updated.');
             }

@@ -16,6 +16,12 @@ Route::get('test', array(
     'uses'=>function(){
         return View::make('test');
     }));
+    
+Route::get('test2', array(
+    'as' => 'fckoff',
+    'uses'=>function(){
+        return View::make('test2');
+    }));
 
 Route::filter('admin', function()
 {

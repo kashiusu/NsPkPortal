@@ -22,7 +22,7 @@ class SummonerController extends BaseController {
                         ->join('leagues', function($join)
                         {
                             $join->on('summoners.id', '=', 'leagues.summoners_id')
-                                 ->where('leagues.leaguetypes_id', '=', 1);
+                                 ->where('leagues.leaguetypes_id', '=', 'RANKED_SOLO_5x5');
                         })
                         ->get();
             return $summoners;
@@ -35,7 +35,7 @@ class SummonerController extends BaseController {
                         ->join('leagues', function($join)
                         {
                             $join->on('summoners.id', '=', 'leagues.summoners_id')
-                                 ->where('leagues.leaguetypes_id', '=', 1);
+                                 ->where('leagues.leaguetypes_id', '=', 'RANKED_SOLO_5x5');
                         })
                         ->get();
             return $summoner;            
@@ -153,13 +153,13 @@ class SummonerController extends BaseController {
         {
             $Summonerleague = self::showLeague($id);
             foreach ($Summonerleague as $SumL){
-                $leaguetype = SummonerdataController::selectType($SumL['queueType']);
+                //$leaguetype = SummonerdataController::selectType($SumL['queueType']);
                 
                 League::firstOrCreate(array(
                         'summoners_id'  => $id,
-                        'leaguetypes_id'=> $leaguetype
+                        'leaguetypes_id'=> $SumL['queueType']
                         ));
-               $updateLeagueData = League::where('summoners_id', $id)->where('leaguetypes_id', $leaguetype);
+               $updateLeagueData = League::where('summoners_id', $id)->where('leaguetypes_id', $SumL['queueType']);
                $updateLeagueData->update(array(
                         'leaguename'    => $SumL['leagueName'],
                         'tier'          => $SumL['tier'],

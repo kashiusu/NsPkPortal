@@ -13,9 +13,11 @@ class CreateTableSpell extends Migration {
 	public function up()
 	{
 		Schema::create('leaguespells', function(Blueprint $table) {
-			$table->string('id')->primary();
+			$table->integer('id')->primary();
 			$table->string('name');
                         $table->string('description');
+                        $table->string('group');
+                        $table->string('image');
 			$table->timestamps();
 		});
 	}
@@ -30,5 +32,4 @@ class CreateTableSpell extends Migration {
 	{
 		Schema::drop('leaguespells');
 	}
-
 }

@@ -4,5 +4,7 @@ class Leagueitem extends Eloquent {
     
     protected $table = 'leagueitems';
     
-    protected $fillable = array('id', 'name', 'w', 'h', 'x', 'y', 'sprite');
+    protected $guarded = array();
+
+	public static $rules = array();
 }
